@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:intl/intl.dart';
 import 'package:personal_expenses/transaction.dart';
 
 void main() {
@@ -52,16 +53,38 @@ class MyHomePage extends StatelessWidget {
     return Scaffold(
       appBar: AppBar(title: const Text('Flutter app')),
       body: Column(
-        mainAxisAlignment: MainAxisAlignment.spaceAround,
+        //mainAxisAlignment: MainAxisAlignment.spaceAround,
         crossAxisAlignment: CrossAxisAlignment.stretch,
         children: <Widget>[
           Container(
             width: double.infinity,
             // alignment: Alignment.center,
-            child: const Card(
+            child: Card(
               color: Colors.blue,
               child: Text('CHART!'),
               elevation: 5,
+            ),
+          ),
+          Card(
+            elevation: 5,
+            child: Container(
+              padding: EdgeInsets.all(10),
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment.end,
+                children: <Widget>[
+                  TextField(
+                    decoration: InputDecoration(labelText: 'Title'),
+                  ),
+                  TextField(
+                    decoration: InputDecoration(labelText: 'Amount'),
+                  ),
+                  FlatButton(
+                    onPressed: () {},
+                    child: Text('Add Transaction'),
+                    textColor: Colors.purple,
+                  )
+                ],
+              ),
             ),
           ),
           Column(
@@ -81,7 +104,8 @@ class MyHomePage extends StatelessWidget {
                       )),
                       padding: const EdgeInsets.all(10),
                       child: Text(
-                        tx.amount.toString(),
+                        // tx.amount.toString(),
+                        '\$${tx.amount}',
                         style: const TextStyle(
                             fontWeight: FontWeight.bold,
                             fontSize: 20,
@@ -99,7 +123,7 @@ class MyHomePage extends StatelessWidget {
                           ),
                         ),
                         Text(
-                          tx.date.toString(),
+                          DateFormat.yMMMd().format(tx.date),
                           style: const TextStyle(
                             color: Colors.grey,
                           ),
