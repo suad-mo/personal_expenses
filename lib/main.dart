@@ -3,10 +3,12 @@ import 'package:flutter/material.dart';
 import '../widgets/user_transactions.dart';
 
 void main() {
-  runApp(MyApp());
+  runApp(const MyApp());
 }
 
 class MyApp extends StatelessWidget {
+  const MyApp({Key? key}) : super(key: key);
+
   //const MyApp({Key? key}) : super(key: key);
 
   // This widget is the root of your application.
@@ -32,7 +34,7 @@ class MyApp extends StatelessWidget {
 }
 
 class MyHomePage extends StatelessWidget {
-  //const MyHomePage({Key? key}) : super(key: key);
+  MyHomePage({Key? key}) : super(key: key);
 
   // String? titleInput;
   // String? amountInput;
@@ -50,10 +52,10 @@ class MyHomePage extends StatelessWidget {
           Container(
             width: double.infinity,
             // alignment: Alignment.center,
-            child: Card(
+            child: const Card(
               color: Colors.blue,
-              child: Text('CHART!'),
               elevation: 5,
+              child: Text('CHART!'),
             ),
           ),
           UserTransactions(),
