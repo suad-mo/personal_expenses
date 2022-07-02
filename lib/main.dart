@@ -1,65 +1,107 @@
 import 'package:flutter/material.dart';
 
-import '../widgets/user_transactions.dart';
+import '../widgets/new_transaction.dart';
+import '../widgets/transaction_list.dart';
+import '../models/transaction.dart';
 
 void main() {
-  runApp(const MyApp());
+  runApp(MyApp());
 }
 
 class MyApp extends StatelessWidget {
-  const MyApp({Key? key}) : super(key: key);
-
   //const MyApp({Key? key}) : super(key: key);
-
-  // This widget is the root of your application.
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
-      title: 'Flutter Demo',
-      theme: ThemeData(
-        // This is the theme of your application.
-        //
-        // Try running your application with "flutter run". You'll see the
-        // application has a blue toolbar. Then, without quitting the app, try
-        // changing the primarySwatch below to Colors.green and then invoke
-        // "hot reload" (press "r" in the console where you ran "flutter run",
-        // or simply save your changes to "hot reload" in a Flutter IDE).
-        // Notice that the counter didn't reset back to zero; the application
-        // is not restarted.
-        primarySwatch: Colors.blue,
-      ),
+      title: 'Flutter App',
       home: MyHomePage(),
     );
   }
 }
 
-class MyHomePage extends StatelessWidget {
-  MyHomePage({Key? key}) : super(key: key);
+class MyHomePage extends StatefulWidget {
+  //MyHomePage({Key? key}) : super(key: key);
+  @override
+  State<MyHomePage> createState() => _MyHomePageState();
+}
 
-  // String? titleInput;
-  // String? amountInput;
-  final titleController = TextEditingController();
-  final amountControler = TextEditingController();
+class _MyHomePageState extends State<MyHomePage> {
+  final List<Transanction> _userTransactions = [
+    Transanction(
+      id: 't1',
+      title: 'New Shoes',
+      amount: 69.99,
+      date: DateTime.now(),
+    ),
+    Transanction(
+      id: 't2',
+      title: 'Weekly Gloceries',
+      amount: 16.53,
+      date: DateTime.now(),
+    )
+  ];
+
+  void _addNewTransaction(String txTitle, double txAmount) {
+    final newTx = Transanction(
+      title: txTitle,
+      amount: txAmount,
+      date: DateTime.now(),
+      id: DateTime.now().toString(),
+    );
+
+    setState(() {
+      _userTransactions.add(newTx);
+    });
+  }
+
+  void _startAddNewTransaction(BuildContext ctx) {
+    //MODAL BUTTOM SHEET
+    showModalBottomSheet(
+      context: ctx,
+      builder: (_) {
+        return GestureDetector(
+          onTap: () {},
+          child: NewTransaction(_addNewTransaction),
+          behavior: HitTestBehavior.opaque,
+        );
+      },
+    );
+  }
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(title: const Text('Flutter app')),
-      body: Column(
-        //mainAxisAlignment: MainAxisAlignment.spaceAround,
-        crossAxisAlignment: CrossAxisAlignment.stretch,
-        children: <Widget>[
-          Container(
-            width: double.infinity,
-            // alignment: Alignment.center,
-            child: const Card(
-              color: Colors.blue,
-              elevation: 5,
-              child: Text('CHART!'),
-            ),
+      appBar: AppBar(
+        title: const Text('Flutter app'),
+        actions: <Widget>[
+          IconButton(
+            onPressed: () => _startAddNewTransaction(context),
+            icon: const Icon(Icons.add),
           ),
-          UserTransactions(),
         ],
+      ),
+      body: SingleChildScrollView(
+        child: Column(
+          //mainAxisAlignment: MainAxisAlignment.spaceAround,
+          crossAxisAlignment: CrossAxisAlignment.stretch,
+          children: <Widget>[
+            Container(
+              width: double.infinity,
+              // alignment: Alignment.center,
+              child: const Card(
+                color: Colors.blue,
+                elevation: 5,
+                child: Text('CHART!'),
+              ),
+            ),
+            TransactionList(_userTransactions),
+          ],
+        ),
+      ),
+      floatingActionButtonLocation: FloatingActionButtonLocation.centerFloat,
+      floatingActionButton: FloatingActionButton(
+        child: Icon(Icons.add),
+        onPressed: () => _startAddNewTransaction(context),
       ),
     );
   }
