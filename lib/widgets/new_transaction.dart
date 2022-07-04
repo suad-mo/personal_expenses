@@ -1,10 +1,9 @@
 import 'package:flutter/material.dart';
 
 class NewTransaction extends StatefulWidget {
-  //const NewTransaction({Key? key}) : super(key: key);
   final Function addTx;
 
-  NewTransaction(this.addTx);
+  const NewTransaction(this.addTx, {Key? key}) : super(key: key);
 
   @override
   State<NewTransaction> createState() => _NewTransactionState();
@@ -50,18 +49,23 @@ class _NewTransactionState extends State<NewTransaction> {
               // },
             ),
             TextField(
-              decoration: InputDecoration(labelText: 'Amount'),
+              decoration: const InputDecoration(labelText: 'Amount'),
               controller: amountController,
               autofocus: true,
               keyboardType: TextInputType.number,
               onSubmitted: (_) => submitData(),
               // onChanged: (val) => amountInput = val,
             ),
-            FlatButton(
+            TextButton(
               onPressed: submitData,
-              child: Text('Add Transaction'),
-              textColor: Colors.purple,
-            )
+              child: const Text('Add Transaction'),
+              //style: const ButtonStyle(backgroundColor: Colors.blueAccent),
+            ),
+            // FlatButton(
+            //   onPressed: submitData,
+            //   child: Text('Add Transaction'),
+            //   textColor: Colors.purple,
+            // )
           ],
         ),
       ),
