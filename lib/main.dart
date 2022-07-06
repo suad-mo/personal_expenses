@@ -2,7 +2,7 @@ import 'dart:io';
 
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter/services.dart';
+//import 'package:flutter/services.dart';
 
 import '../widgets/chart.dart';
 import '../widgets/new_transaction.dart';
@@ -162,7 +162,7 @@ class _MyHomePageState extends State<MyHomePage> {
         ],
       );
     }
-    final txListWidget = Container(
+    final txListWidget = SizedBox(
       height: (mediaQuery.size.height -
               appBar.preferredSize.height -
               mediaQuery.padding.top) *
@@ -193,7 +193,7 @@ class _MyHomePageState extends State<MyHomePage> {
                 ],
               ),
             if (!isLanscape)
-              Container(
+              SizedBox(
                   height: (mediaQuery.size.height -
                           appBar.preferredSize.height -
                           mediaQuery.padding.top) *
@@ -202,7 +202,7 @@ class _MyHomePageState extends State<MyHomePage> {
             if (!isLanscape) txListWidget,
             if (isLanscape)
               _showChart
-                  ? Container(
+                  ? SizedBox(
                       height: (mediaQuery.size.height -
                               appBar.preferredSize.height -
                               mediaQuery.padding.top) *
@@ -215,8 +215,8 @@ class _MyHomePageState extends State<MyHomePage> {
     );
     return Platform.isIOS
         ? CupertinoPageScaffold(
-            child: pageBody,
             navigationBar: appBar as ObstructingPreferredSizeWidget,
+            child: pageBody,
           )
         : Scaffold(
             appBar: appBar,
